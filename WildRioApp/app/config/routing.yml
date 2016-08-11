@@ -1,3 +1,34 @@
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
+
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
+index:
+    path:     /
+    defaults: { _controller: AppBundle:Security:login }
+
+register:
+    path:     /register
+    defaults: { _controller: AppBundle:Registration:register }
+
+user_login_check:
+    path:    /connect/check
+    defaults: { _controller: AppBundle:Security:check }
+
+epreuve:
+    path:     /epreuve/{idepreuve}
+    defaults: { _controller: AppBundle:Default:epreuve }
+
+new_epreuve:
+    path:    /epreuve/new
+    defaults: { _controller: AppBundle:Default:newEpreuve}
+
+new_athlete:
+    path:    /athlete/new/{idepreuve}
+    defaults: { _controller: AppBundle:Default:newAthlete}
+
+vote:
+    path:    /vote/{idathlete}
+    defaults: { _controller: AppBundle:Default:vote}

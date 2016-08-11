@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+		<div class="col-md-12">
+			<div class="col-md-3"></div>
+			<div class="col-md-6">	
+				{% for label, flashes in app.session.flashbag.all %}
+		    		{% for flash in flashes %}
+		        		<div class="alert alert-{{ label }}">
+		            		{{ flash }}
+		        		</div>
+		    		{% endfor %}
+				{% endfor %}
+			</div>
+			<div class="col-md-3"></div>
+		</div>
+
+<div class="col-md-12">
+	<div class="col-md-2"></div>
+	<div class="col-md-8">	
+		<h1 style="text-align:center;">Ajouter une epreuve</h1>
+		{{ form_start(form) }}
+		<div class="col-md-12">
+			<label>Nom </label>
+		    {{ form_widget(form.nom) }}
+		    <hr/>
+		</div>
+		<div class="col-md-12">
+		    <label>Description </label>
+		    {{ form_widget(form.description) }}
+		    <hr/>
+		</div>
+		<div class="col-md-12">
+		    <label>Pḧoto d'épreuve </label>
+		    {{ form_widget(form.image) }}
+		    <hr/>
+		</div>
+		<div class="col-md-12">
+		    <input type="submit" class="btn btn-primary" id="_submit" name="submit" value="Envoyer" />
+		</div>
+		{{ form_end(form) }}
+	</div>
+	<div class="col-md-3"></div>
+</div>
+
+{% endblock %}

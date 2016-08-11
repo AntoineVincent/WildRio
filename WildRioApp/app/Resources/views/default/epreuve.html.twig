@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<a class="back-link" href="{{ path('index') }}"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Retour</a>
+	<span class="separatedlink">|||||</span>
+	<a class="add-link" href="{{ path('new_athlete', { 'idepreuve': epreuve.id }) }}">Ajouter un Athlete <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+
+	<div class="col-md-12 div-photo-epreuve">
+		<img class="photo-epreuve" src="{{ asset('uploads/epreuve/' ~ epreuve.image) }}" alt="epreuve">
+	</div>
+	<div class="col-md-12 desc-epreuve-div">
+		<div class="col-md-1"></div>
+		<div class="col-md-10">
+			<p>{{ epreuve.nom }}</p>
+			<p>{{ epreuve.description }}</p>
+		</div>
+		<div class="col-md-1"></div>
+	</div>
+	<div class="col-md-12">
+		<div class="col-md-1"></div>
+		<div class="col-md-10 liste-athlte">
+			{% if voteEpreuves is empty %}
+				{% if athletes is empty %}
+					<p> Aucun Athlete ne participe à l'épreuve</p>
+				{% else %}
+					<table>
+						<tbody>
+							{% for athlete in athletes %}
+								<tr>
+									<td class="athlete-data">{{ athlete.nom }}</td>
+									<td><a href="{{ path('vote', { 'idathlete': athlete.id }) }}"><button class="btn btn-default">Voter</button></a></td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				{% endif %}
+			{% else %}
+				{% for vote in voteEpreuves %}
+					{% if vote.iduser == user.id %}
+						<p class="alreadyvoted"><span class="glyphicon glyphicon-ok"></span> Vous avez déjà voté</p>
+					{% else %}
+						<table>
+							<tbody>
+								{% for athlete in athletes %}
+									<tr>
+										<td class="athlete-data">{{ athlete.nom }}</td>
+										<td><a href="{{ path('vote', { 'idathlete': athlete.id }) }}"><button class="btn btn-default">Voter</button></a></td>
+									</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					{% endif %}
+				{% endfor %}
+			{% endif %}
+		</div>
+		<div class="col-md-1"></div>
+	</div>
+
+	<div class="col-md-12">
+		<div class="col-md-1"></div>
+		<div class="col-md-10 rslt-athlte">
+			{% for athlete in athletes|sort %}
+				{% if athlete.percent != 0 %}
+					<div class="col-md-9">
+						<div class="col-md-12">
+							<div class="global">
+								<div id="{{ athlete.id }}" class="col-md-12 first-progress"></div>
+							</div>
+						</div>
+					</div>
+			<div class="col-md-3 rslt-athlte">
+				<div class="col-md-12 podium">{{ athlete.nom }}({{ athlete.percent }}%) </div>
+			</div>
+				{% endif %}
+			{% endfor %}
+		</div>
+		<div class="col-md-1"></div>
+	</div>
+					{% for athlete in athletes|sort %}
+						<script>
+							$(document).ready(function() {
+								$('#{{ athlete.id }}').css( "width", "{{ athlete.percent }}%" );
+								$('#{{ athlete.id }}').css( "height", "25px" );
+								$('#{{ athlete.id }}').css( "padding", "0" );
+								$('#{{ athlete.id }}').css( "margin-bottom", "25px" );
+								$('#{{ athlete.id }}').css( "border-radius", "5px" );
+								$('#{{ athlete.id }}').css( "background-color", "#d9534f" );
+							});
+						</script>
+					{% endfor %}
+
+
+{% endblock %}
