@@ -22,7 +22,7 @@ epreuve:
     defaults: { _controller: AppBundle:Default:epreuve }
 
 new_epreuve:
-    path:    /epreuve/new
+    path:    /new/epreuve
     defaults: { _controller: AppBundle:Default:newEpreuve}
 
 new_athlete:
